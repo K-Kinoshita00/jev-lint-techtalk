@@ -1,0 +1,9 @@
+# jev-lint PoC: testdata のベースライン計測用（golangci-lint デフォルトに近い standard）
+version: "2"
+
+run:
+  timeout: 5m
+  tests: false
+
+linters:
+  default: standard
