@@ -9,13 +9,7 @@ JEV（TypeSafe AI）向け Go リンター PoC 用のデモコーパス。
 
 ## コーパス構成
 
-| ディレクトリ     | 件数 | 説明                             |
-| ---------------- | ---- | -------------------------------- |
-| `testdata/good/` | 10   | 一般的な Go の慣習に沿った例     |
-| `testdata/bad/`  | 10   | 明確な問題（NG）                 |
-| `testdata/gray/` | 10   | 文脈次第・議論余地あり（グレー） |
-
-NG・グレーの意図は [docs/corpus-annotations.md](docs/corpus-annotations.md) を参照。
+`testdata/*.go` に 30 ファイルを置いている。パッケージ名は `testdata`。good / gray / bad の区分と、検出されるべき軸は [testdata/README.md](testdata/README.md)。
 
 ## ベースライン計測
 
@@ -36,7 +30,7 @@ make jev-baseline
 ```bash
 make verify
 # または
-go build -o /dev/null ./testdata/good ./testdata/bad ./testdata/gray
+go build -o /dev/null ./testdata
 ```
 
-全パッケージがコンパイルできることを確認する。
+`testdata` パッケージがコンパイルできることを確認する。

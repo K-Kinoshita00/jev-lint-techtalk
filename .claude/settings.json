@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./testdata/README.md)",
+      "Bash(cat *testdata/README.md*)",
+      "Bash(head *testdata/README.md*)",
+      "Bash(tail *testdata/README.md*)",
+      "Bash(less *testdata/README.md*)",
+      "Bash(bat *testdata/README.md*)",
+      "Bash(sed *testdata/README.md*)",
+      "Bash(rg *testdata/README.md*)",
+      "Bash(grep *testdata/README.md*)",
+      "Bash(cat *docs/corpus-annotations.md*)",
+      "Bash(head *docs/corpus-annotations.md*)",
+      "Bash(tail *docs/corpus-annotations.md*)",
+      "Bash(rg *docs/corpus-annotations.md*)",
+      "Bash(grep *docs/corpus-annotations.md*)"
+    ]
+  }
+}
