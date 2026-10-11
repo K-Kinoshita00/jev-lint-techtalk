@@ -21,25 +21,25 @@ if [[ -z "${JEV_API_URL:-}" ]]; then
   exit 1
 fi
 
-OUT="${1:-docs/jev-choice-raw.jsonl}"
-USAGE="${2:-docs/jev-choice-usage.json}"
+OUT="${1:-docs/jev-choice2-raw.jsonl}"
+USAGE="${2:-docs/jev-choice2-usage.json}"
 : >"$OUT"
 
 read -r -d '' QUESTIONS <<'EOF' || true
 {
-  "ctx": { "type": "noul", "instructions": "I/O や待ちがあり得る API が context.Context を第一引数で受け取っておらず、キャンセルも考慮されていない" },
-  "err": { "type": "noul", "instructions": "エラーを無視している、または呼び出し元に返すべきエラーを返していない" },
-  "conc": { "type": "noul", "instructions": "キャンセル・待ち合わせのない goroutine、または共有 map 等のデータレースの疑い" },
-  "sec": { "type": "noul", "instructions": "SQL 文字列連結、パスワード等の機微情報ログ" },
-  "resource": { "type": "noul", "instructions": "ループ内の defer で Close が関数終了まで遅れる、または書き込み後の Close エラーを無視している" },
-  "api": { "type": "noul", "instructions": "ライブラリや公開関数が通常の入力不備で panic する、または naked return で戻り値の契約が不明瞭" },
+  "ctx": { "type": "noul", "instructions": "コンテキストの伝播が欠落しており、キャンセル・タイムアウトが機能しない" },
+  "err": { "type": "noul", "instructions": "エラーが握りつぶされているか、呼び出し元に適切に返却されていない" },
+  "conc": { "type": "noul", "instructions": "goroutine のリーク・データレース・排他制御の欠落など並行処理の安全性問題" },
+  "sec": { "type": "noul", "instructions": "SQLインジェクションや機微情報の外部露出などセキュリティリスク" },
+  "resource": { "type": "noul", "instructions": "ファイルや接続などのリソースが適切に解放されない、または解放エラーが無視される" },
+  "api": { "type": "noul", "instructions": "公開 API が通常の入力で panic するか、戻り値の契約が不明瞭" },
   "verdict": {
     "type": "choice",
     "instructions": "この Go コードはどの区分か",
     "criteria": {
-      "bad": "呼び出し方によらず明確に直すべき欠陥",
-      "gray": "文脈次第で許容にも要修正にもなる",
-      "good": "一般的な Go の慣習に沿っている"
+      "bad": "コードパスによらず修正必須の明確な欠陥",
+      "gray": "設計意図や実行環境によって許容か要修正かが変わる",
+      "good": "言語慣習とベストプラクティスに沿っている"
     }
   }
 }
