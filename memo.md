@@ -80,22 +80,6 @@ Prompt cache (main): 3 requests · 63% of input tokens from cache · no misses �
 
 6軸の問題あり確率と verdict。軸の太字は ≥ 0.70。verdict の太字は最大。
 
-## bad（10）
-
-| ファイル                  | ctx            | err            | conc           | sec            | resource       | api            | verdict（bad / gray / good） | 注釈の主タグ  |
-| ------------------------- | -------------- | -------------- | -------------- | -------------- | -------------- | -------------- | ---------------------------- | ------------- |
-| `no_context_param.go`     | **yes (0.72)** | no (0.00)      | no (0.00)      | no (0.00)      | no (0.00)      | no (0.00)      | 0.12 / **0.75** / 0.13       | ctx, api      |
-| `swallow_error.go`        | no (0.00)      | **yes (0.82)** | no (0.00)      | no (0.12)      | no (0.00)      | no (0.00)      | **0.78** / 0.18 / 0.04       | err           |
-| `leaky_goroutine.go`      | **yes (0.88)** | **yes (0.72)** | **yes (0.85)** | no (0.12)      | **yes (0.75)** | no (0.00)      | **0.85** / 0.12 / 0.03       | conc, ctx     |
-| `sql_concat.go`           | no (0.48)      | no (0.05)      | no (0.00)      | **yes (0.95)** | no (0.12)      | no (0.00)      | **0.92** / 0.06 / 0.02       | sec           |
-| `defer_in_loop.go`        | no (0.00)      | no (0.05)      | no (0.00)      | no (0.00)      | **yes (0.85)** | no (0.05)      | **0.78** / 0.18 / 0.04       | resource      |
-| `log_secret.go`           | no (0.00)      | no (0.00)      | no (0.00)      | **yes (0.95)** | no (0.00)      | no (0.00)      | **0.92** / 0.06 / 0.02       | sec           |
-| `mutex_unlock_missing.go` | no (0.00)      | no (0.00)      | **yes (0.92)** | no (0.00)      | no (0.00)      | no (0.05)      | **0.90** / 0.08 / 0.02       | conc, err     |
-| `panic_in_lib.go`         | no (0.00)      | no (0.00)      | no (0.00)      | no (0.00)      | no (0.00)      | **yes (0.72)** | 0.22 / **0.68** / 0.10       | api, err      |
-| `race_on_map.go`          | no (0.00)      | no (0.00)      | **yes (0.72)** | no (0.00)      | no (0.00)      | no (0.15)      | 0.38 / **0.55** / 0.07       | conc          |
-| `ignore_close_error.go`   | no (0.05)      | no (0.22)      | no (0.00)      | no (0.00)      | no (0.18)      | no (0.00)      | 0.12 / **0.72** / 0.16       | err, resource |
-
-verdict の最大は 6/10 が bad。外れたのは `no_context_param`（gray 0.75 / bad 0.12）、`panic_in_lib`（gray 0.68 / bad 0.22）、`race_on_map`（gray 0.55 / bad 0.38）、`ignore_close_error`（gray 0.72 / bad 0.12）。注釈の主タグが 0.70 未満なのは `no_context_param` の api（0.00）、`mutex_unlock_missing` の err（0.00）、`panic_in_lib` の err（0.00）、`ignore_close_error` の err（0.22）・resource（0.18）。0.70 以上で注釈にないのは `leaky_goroutine` の err（0.72）・resource（0.75）。
 
 ## good（10）
 
@@ -131,6 +115,23 @@ verdict の最大は 6/10 が bad。外れたのは `no_context_param`（gray 0.
 
 軸が 0.70 以上なのは `global_background_ctx` ctx（0.85）のみ。verdict の最大は 8/10 が gray。外れたのは `global_background_ctx`（bad 0.58 / gray 0.37）、`unbuffered_signal_chan`（good 0.82 / gray 0.18）。
 
+## bad（10）
+
+| ファイル                  | ctx            | err            | conc           | sec            | resource       | api            | verdict（bad / gray / good） | 注釈の主タグ  |
+| ------------------------- | -------------- | -------------- | -------------- | -------------- | -------------- | -------------- | ---------------------------- | ------------- |
+| `no_context_param.go`     | **yes (0.72)** | no (0.00)      | no (0.00)      | no (0.00)      | no (0.00)      | no (0.00)      | 0.12 / **0.75** / 0.13       | ctx, api      |
+| `swallow_error.go`        | no (0.00)      | **yes (0.82)** | no (0.00)      | no (0.12)      | no (0.00)      | no (0.00)      | **0.78** / 0.18 / 0.04       | err           |
+| `leaky_goroutine.go`      | **yes (0.88)** | **yes (0.72)** | **yes (0.85)** | no (0.12)      | **yes (0.75)** | no (0.00)      | **0.85** / 0.12 / 0.03       | conc, ctx     |
+| `sql_concat.go`           | no (0.48)      | no (0.05)      | no (0.00)      | **yes (0.95)** | no (0.12)      | no (0.00)      | **0.92** / 0.06 / 0.02       | sec           |
+| `defer_in_loop.go`        | no (0.00)      | no (0.05)      | no (0.00)      | no (0.00)      | **yes (0.85)** | no (0.05)      | **0.78** / 0.18 / 0.04       | resource      |
+| `log_secret.go`           | no (0.00)      | no (0.00)      | no (0.00)      | **yes (0.95)** | no (0.00)      | no (0.00)      | **0.92** / 0.06 / 0.02       | sec           |
+| `mutex_unlock_missing.go` | no (0.00)      | no (0.00)      | **yes (0.92)** | no (0.00)      | no (0.00)      | no (0.05)      | **0.90** / 0.08 / 0.02       | conc, err     |
+| `panic_in_lib.go`         | no (0.00)      | no (0.00)      | no (0.00)      | no (0.00)      | no (0.00)      | **yes (0.72)** | 0.22 / **0.68** / 0.10       | api, err      |
+| `race_on_map.go`          | no (0.00)      | no (0.00)      | **yes (0.72)** | no (0.00)      | no (0.00)      | no (0.15)      | 0.38 / **0.55** / 0.07       | conc          |
+| `ignore_close_error.go`   | no (0.05)      | no (0.22)      | no (0.00)      | no (0.00)      | no (0.18)      | no (0.00)      | 0.12 / **0.72** / 0.16       | err, resource |
+
+verdict の最大は 6/10 が bad。外れたのは `no_context_param`（gray 0.75 / bad 0.12）、`panic_in_lib`（gray 0.68 / bad 0.22）、`race_on_map`（gray 0.55 / bad 0.38）、`ignore_close_error`（gray 0.72 / bad 0.12）。注釈の主タグが 0.70 未満なのは `no_context_param` の api（0.00）、`mutex_unlock_missing` の err（0.00）、`panic_in_lib` の err（0.00）、`ignore_close_error` の err（0.22）・resource（0.18）。0.70 以上で注釈にないのは `leaky_goroutine` の err（0.72）・resource（0.75）。
+
 ---
 
 # JEV
@@ -148,22 +149,6 @@ set -a && source .env && set +a
 
 6軸 noul（ctx / err / conc / sec / resource / api）とファイル区分 choice（verdict）。生データは [docs/jev-choice2-raw.jsonl](docs/jev-choice2-raw.jsonl)。usage は [docs/jev-choice2-usage.json](docs/jev-choice2-usage.json)。verdict は bad / gray / good の確率。軸の太字は ≥ 0.70。verdict の太字は最大。
 
-## bad（10）
-
-| ファイル                  | ctx            | err            | conc      | sec            | resource  | api       | verdict（bad / gray / good） | 注釈の主タグ  |
-| ------------------------- | -------------- | -------------- | --------- | -------------- | --------- | --------- | ---------------------------- | ------------- |
-| `no_context_param.go`     | **yes (0.88)** | no (0.08)      | no (0.12) | no (0.11)      | no (0.04) | no (0.13) | 0.23 / **0.63** / 0.14       | ctx, api      |
-| `swallow_error.go`        | no (0.31)      | **yes (0.96)** | no (0.17) | no (0.40)      | no (0.15) | no (0.44) | 0.15 / **0.63** / 0.22       | err           |
-| `leaky_goroutine.go`      | **yes (0.93)** | **yes (0.97)** | no (0.68) | no (0.44)      | no (0.39) | no (0.39) | 0.40 / **0.58** / 0.02       | conc, ctx     |
-| `sql_concat.go`           | no (0.67)      | no (0.13)      | no (0.22) | **yes (0.97)** | no (0.43) | no (0.47) | **1.00** / 0.00 / 0.00       | sec           |
-| `defer_in_loop.go`        | **yes (0.79)** | no (0.10)      | no (0.10) | no (0.19)      | no (0.42) | no (0.24) | **0.62** / 0.16 / 0.22       | resource      |
-| `log_secret.go`           | no (0.66)      | no (0.39)      | no (0.07) | **yes (0.80)** | no (0.05) | no (0.15) | 0.43 / **0.46** / 0.11       | sec           |
-| `mutex_unlock_missing.go` | no (0.56)      | no (0.15)      | no (0.41) | no (0.08)      | no (0.07) | no (0.35) | **0.49** / 0.35 / 0.16       | conc, err     |
-| `panic_in_lib.go`         | no (0.20)      | no (0.17)      | no (0.07) | no (0.08)      | no (0.04) | no (0.41) | 0.17 / **0.58** / 0.25       | api, err      |
-| `race_on_map.go`          | no (0.17)      | no (0.09)      | no (0.59) | no (0.05)      | no (0.03) | no (0.30) | 0.10 / 0.21 / **0.69**       | conc          |
-| `ignore_close_error.go`   | no (0.61)      | no (0.31)      | no (0.32) | no (0.15)      | no (0.56) | no (0.18) | 0.30 / 0.31 / **0.39**       | err, resource |
-
-verdict の最大は 3/10 が bad（`sql_concat` `defer_in_loop` `mutex_unlock_missing`）。外れたのは `no_context_param`（gray 0.63 / bad 0.23）、`swallow_error`（gray 0.63）、`leaky_goroutine`（gray 0.58 / bad 0.40）、`log_secret`（gray 0.46 / bad 0.43）、`panic_in_lib`（gray 0.58）、`race_on_map`（good 0.69）、`ignore_close_error`（good 0.39）。注釈の主タグが 0.70 未満なのは `no_context_param` の api（0.13）、`leaky_goroutine` の conc（0.68）、`defer_in_loop` の resource（0.42）、`mutex_unlock_missing`（conc 0.41 / err 0.15）、`panic_in_lib`（api 0.41 / err 0.17）、`race_on_map` の conc（0.59）、`ignore_close_error`（err 0.31 / resource 0.56）。0.70 以上で注釈にないのは `leaky_goroutine` の err（0.97）、`defer_in_loop` の ctx（0.79）。
 
 ## good（10）
 
@@ -172,7 +157,7 @@ verdict の最大は 3/10 が bad（`sql_concat` `defer_in_loop` `mutex_unlock_m
 | `context_first.go`       | no (0.08)      | no (0.09) | no (0.13) | no (0.10) | no (0.05) | no (0.10) | 0.03 / 0.20 / **0.77**       |
 | `error_wrap.go`          | **yes (0.89)** | no (0.08) | no (0.09) | no (0.22) | no (0.08) | no (0.10) | 0.05 / 0.22 / **0.73**       |
 | `goroutine_ctx.go`       | no (0.16)      | no (0.24) | no (0.21) | no (0.05) | no (0.16) | no (0.32) | 0.21 / 0.23 / **0.56**       |
-| `defer_close.go`         | **yes (0.81)** | no (0.11) | no (0.25) | no (0.21) | no (0.33) | no (0.18) | 0.08 / **0.46** / 0.46       |
+| `defer_close.go`         | **yes (0.81)** | no (0.11) | no (0.25) | no (0.21) | no (0.33) | no (0.18) | 0.08 / 0.46 / **0.46**       |
 | `timeout_query.go`       | no (0.12)      | no (0.11) | no (0.21) | no (0.41) | no (0.37) | no (0.31) | 0.13 / 0.32 / **0.55**       |
 | `mutex_guard.go`         | no (0.32)      | no (0.08) | no (0.14) | no (0.06) | no (0.05) | no (0.11) | 0.02 / 0.04 / **0.94**       |
 | `structured_log.go`      | no (0.18)      | no (0.12) | no (0.11) | no (0.23) | no (0.05) | no (0.11) | 0.02 / 0.15 / **0.83**       |
@@ -198,3 +183,20 @@ verdict の最大は 3/10 が bad（`sql_concat` `defer_in_loop` `mutex_unlock_m
 | `json_marshal_best_effort.go` | no (0.20)      | **yes (0.96)** | no (0.07) | no (0.26) | no (0.06) | no (0.31) | 0.34 / **0.61** / 0.05       | err           |
 
 軸が 0.70 以上なのは `log_only_error` err（0.72）、`goroutine_wg_no_ctx` ctx（0.91）、`global_background_ctx` ctx（0.79）、`json_marshal_best_effort` err（0.96）。`unbuffered_signal_chan` の主タグは conc（0.28）。verdict の最大は 6/10 が gray。外れたのは `context_todo`（good 0.56）、`goroutine_wg_no_ctx`（good 0.76）、`rwlock_always_write`（bad 0.52）、`unbuffered_signal_chan`（good 0.85）。
+
+## bad（10）
+
+| ファイル                  | ctx            | err            | conc      | sec            | resource  | api       | verdict（bad / gray / good） | 注釈の主タグ  |
+| ------------------------- | -------------- | -------------- | --------- | -------------- | --------- | --------- | ---------------------------- | ------------- |
+| `no_context_param.go`     | **yes (0.88)** | no (0.08)      | no (0.12) | no (0.11)      | no (0.04) | no (0.13) | 0.23 / **0.63** / 0.14       | ctx, api      |
+| `swallow_error.go`        | no (0.31)      | **yes (0.96)** | no (0.17) | no (0.40)      | no (0.15) | no (0.44) | 0.15 / **0.63** / 0.22       | err           |
+| `leaky_goroutine.go`      | **yes (0.93)** | **yes (0.97)** | no (0.68) | no (0.44)      | no (0.39) | no (0.39) | 0.40 / **0.58** / 0.02       | conc, ctx     |
+| `sql_concat.go`           | no (0.67)      | no (0.13)      | no (0.22) | **yes (0.97)** | no (0.43) | no (0.47) | **1.00** / 0.00 / 0.00       | sec           |
+| `defer_in_loop.go`        | **yes (0.79)** | no (0.10)      | no (0.10) | no (0.19)      | no (0.42) | no (0.24) | **0.62** / 0.16 / 0.22       | resource      |
+| `log_secret.go`           | no (0.66)      | no (0.39)      | no (0.07) | **yes (0.80)** | no (0.05) | no (0.15) | 0.43 / **0.46** / 0.11       | sec           |
+| `mutex_unlock_missing.go` | no (0.56)      | no (0.15)      | no (0.41) | no (0.08)      | no (0.07) | no (0.35) | **0.49** / 0.35 / 0.16       | conc, err     |
+| `panic_in_lib.go`         | no (0.20)      | no (0.17)      | no (0.07) | no (0.08)      | no (0.04) | no (0.41) | 0.17 / **0.58** / 0.25       | api, err      |
+| `race_on_map.go`          | no (0.17)      | no (0.09)      | no (0.59) | no (0.05)      | no (0.03) | no (0.30) | 0.10 / 0.21 / **0.69**       | conc          |
+| `ignore_close_error.go`   | no (0.61)      | no (0.31)      | no (0.32) | no (0.15)      | no (0.56) | no (0.18) | 0.30 / 0.31 / **0.39**       | err, resource |
+
+verdict の最大は 3/10 が bad（`sql_concat` `defer_in_loop` `mutex_unlock_missing`）。外れたのは `no_context_param`（gray 0.63 / bad 0.23）、`swallow_error`（gray 0.63）、`leaky_goroutine`（gray 0.58 / bad 0.40）、`log_secret`（gray 0.46 / bad 0.43）、`panic_in_lib`（gray 0.58）、`race_on_map`（good 0.69）、`ignore_close_error`（good 0.39）。注釈の主タグが 0.70 未満なのは `no_context_param` の api（0.13）、`leaky_goroutine` の conc（0.68）、`defer_in_loop` の resource（0.42）、`mutex_unlock_missing`（conc 0.41 / err 0.15）、`panic_in_lib`（api 0.41 / err 0.17）、`race_on_map` の conc（0.59）、`ignore_close_error`（err 0.31 / resource 0.56）。0.70 以上で注釈にないのは `leaky_goroutine` の err（0.97）、`defer_in_loop` の ctx（0.79）。
